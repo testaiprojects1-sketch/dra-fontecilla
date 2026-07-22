@@ -11,7 +11,7 @@ export default function AboutDoctor() {
             <div className="aspect-[4/5] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://placehold.co/900x1125/D5C7B6/6E1E2B?text=Dra.+Fontecilla"
+                src="/images/doctora.jpg"
                 alt="Dra. Macarena Fontecilla"
                 className="h-full w-full object-cover"
                 width={900}

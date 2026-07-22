@@ -9,7 +9,7 @@ export default function ClinicSection() {
         <div className="fade-up relative min-h-[420px] lg:min-h-[640px] order-1">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://placehold.co/1400x1000/C8B8A4/FAF7F2?text=Interior+consulta"
+            src="/images/consulta.jpg"
             alt="Interior de la consulta en Vitacura"
             className="absolute inset-0 h-full w-full object-cover"
             width={1400}

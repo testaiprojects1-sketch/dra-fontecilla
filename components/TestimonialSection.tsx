@@ -10,7 +10,7 @@ export default function TestimonialSection() {
           <div className="relative min-h-[380px] lg:min-h-[560px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://placehold.co/1200x900/BCA990/FAF7F2?text=Paciente"
+              src="/images/testimonio.jpg"
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
               width={1200}

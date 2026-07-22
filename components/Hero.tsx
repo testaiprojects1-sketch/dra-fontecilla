@@ -9,7 +9,7 @@ const SLIDES = [
     cta: "Agendar una evaluación",
     href: "#agendar",
     image:
-      "https://placehold.co/1920x1100/C9B8A6/FAF7F2?text=Hero+editorial+1",
+      "/images/hero-1.jpg",
   },
   {
     eyebrow: "Diagnóstico digital",
@@ -17,7 +17,7 @@ const SLIDES = [
     cta: "Ver tratamientos",
     href: "#tratamientos",
     image:
-      "https://placehold.co/1920x1100/B7A28F/FAF7F2?text=Hero+editorial+2",
+      "/images/hero-2.jpg",
   },
   {
     eyebrow: "Consulta privada · Vitacura",
@@ -25,7 +25,7 @@ const SLIDES = [
     cta: "Conocer la consulta",
     href: "#la-consulta",
     image:
-      "https://placehold.co/1920x1100/A8927E/FAF7F2?text=Hero+editorial+3",
+      "/images/hero-3.jpg",
   },
 ];
 

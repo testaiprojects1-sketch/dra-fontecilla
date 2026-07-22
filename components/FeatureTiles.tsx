@@ -1,15 +1,15 @@
 const TILES = [
   {
     label: "Pacientes que vuelven",
-    image: "https://placehold.co/900x1100/C4B5A5/FAF7F2?text=Pacientes",
+    image: "/images/tile-pacientes.jpg",
   },
   {
     label: "Resultados naturales",
-    image: "https://placehold.co/900x1100/B9A793/FAF7F2?text=Resultados",
+    image: "/images/tile-resultados.jpg",
   },
   {
     label: "X años de experiencia",
-    image: "https://placehold.co/900x1100/AD9A84/FAF7F2?text=Experiencia",
+    image: "/images/tile-experiencia.jpg",
   },
 ];
 

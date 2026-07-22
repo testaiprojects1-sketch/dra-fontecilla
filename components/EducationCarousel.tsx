@@ -6,22 +6,22 @@ const ARTICLES = [
   {
     category: "Blanqueamiento",
     title: "¿Cuánto dura realmente un blanqueamiento?",
-    image: "https://placehold.co/800x560/E8DFD3/6E1E2B?text=Blanqueamiento",
+    image: "/images/edu-blanqueamiento.jpg",
   },
   {
     category: "Facial",
     title: "Toxina: mitos y verdades",
-    image: "https://placehold.co/800x560/E2D5C6/6E1E2B?text=Toxina",
+    image: "/images/edu-toxina.jpg",
   },
   {
     category: "Guía",
     title: "Cómo elegir a su especialista",
-    image: "https://placehold.co/800x560/DDD2C4/6E1E2B?text=Especialista",
+    image: "/images/edu-especialista.jpg",
   },
   {
     category: "Mantención",
     title: "El valor de una mantención oportuna",
-    image: "https://placehold.co/800x560/D8CBBA/6E1E2B?text=Mantenci%C3%B3n",
+    image: "/images/edu-mantencion.jpg",
   },
 ];
 
