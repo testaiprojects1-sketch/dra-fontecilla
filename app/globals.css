@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #faf9f6;
+  --ink: #1a1d21;
+  --teal: #0f4c5c;
+  --taupe: #9a6a3f;
+  --success: #3d7a4f;
+  --alert: #b0522f;
+  --line: #e4e2dc;
+  --muted: #6b6e73;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+@layer utilities {
+  .approval-exit {
+    animation: approval-exit 320ms ease forwards;
+  }
+}
+
+@keyframes approval-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 280px;
+    margin-bottom: 0.75rem;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
