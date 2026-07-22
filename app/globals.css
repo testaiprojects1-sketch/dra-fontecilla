@@ -3,49 +3,49 @@
 @tailwind utilities;
 
 :root {
-  --cream: #faf7f2;
-  --ivory: #f3eee6;
-  --burgundy: #6e1e2b;
-  --burgundy-dark: #551722;
-  --charcoal: #232323;
-  --gold: #b49a6a;
+  --paper: #faf9f6;
+  --ink: #1a1d21;
+  --teal: #0f4c5c;
+  --taupe: #9a6a3f;
+  --success: #3d7a4f;
+  --alert: #b0522f;
+  --line: #e4e2dc;
+  --muted: #6b6e73;
 }
 
-html {
-  scroll-behavior: smooth;
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background-color: var(--cream);
-  color: var(--charcoal);
+  background-color: var(--paper);
+  color: var(--ink);
 }
 
 @layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  .approval-exit {
+    animation: approval-exit 320ms ease forwards;
   }
 }
 
-.fade-up {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+@keyframes approval-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 280px;
+    margin-bottom: 0.75rem;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
-.fade-up.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Sebagh-like thin gold rule */
-.rule-gold {
-  width: 48px;
-  height: 1px;
-  background: var(--gold);
+input[type="range"].accent-teal {
+  accent-color: #0f4c5c;
 }

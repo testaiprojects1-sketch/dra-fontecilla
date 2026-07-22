@@ -1,33 +1,29 @@
-# Dra. Macarena Fontecilla — Estética Dental y Facial
+# AURA — Panel de la Consulta
 
-Single-page prototype inspired by the homepage composition of [drsebagh.com](https://www.drsebagh.com/), adapted for a private aesthetic practice in Vitacura.
+Panel interno demo para la consulta de la **Dra. Macarena Fontecilla**.
 
-## Layout (Sebagh order)
+> AURA propone · usted aprueba
 
-1. Announcement bar  
-2. Centered wordmark header  
-3. Full-bleed hero slideshow  
-4. Centered manifesto  
-5. Three feature tiles  
-6. Treatments carousel  
-7. About the doctor  
-8. Full-bleed clinic split  
-9. Patient testimonial  
-10. Credentials strip  
-11. Education carousel  
-12. Benefits grid  
-13. Final CTA + assistant slot  
-14. Footer  
+## Stack
 
-## Develop
+- Next.js 14 (App Router)
+- Tailwind CSS
+- Recharts
+- Datos mock en `data/mock.ts` + `data/extended.ts` (simulados desde Google Sheets)
+
+## Módulos
+
+1. **Centro de Mando** — KPIs, agenda (diaria/semanal/mensual), aprobaciones, ElevenLabs (placeholder), gráficos, inactivos
+2. **Acciones & Tareas** — tableros diaria / semanal / mensual
+3. **Pacientes & Predicción** — lealtad, riesgo, leads
+4. **KPIs & Simulador** — benchmarks + simulador de impacto
+5. **Crecimiento Digital** — redes desde cero, 90 días, heatmap, plan de contenido
+
+## Desarrollo
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Deploy
-
-```bash
-npx vercel --prod
-```
+Abrir [http://localhost:3000](http://localhost:3000) — pensado para demo a 1440px.

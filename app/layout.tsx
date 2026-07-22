@@ -1,45 +1,20 @@
 import type { Metadata } from "next";
-import { Jost, Cormorant_Garamond } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const jost = Jost({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-jost",
   display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-  display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title:
-    "Dra. Macarena Fontecilla — Estética Dental y Facial | Vitacura, Santiago",
+  title: "AURA — Panel de la Consulta · Dra. Macarena Fontecilla",
   description:
-    "Consulta privada de estética dental y facial en Vitacura. Resultados naturales, atención personalizada y diagnóstico digital de sonrisa. Agende su evaluación.",
-  keywords: [
-    "estética dental Vitacura",
-    "estética facial Santiago",
-    "Dra. Macarena Fontecilla",
-    "blanqueamiento dental",
-    "armonización facial",
-    "diseño de sonrisa",
-    "toxina botulínica Vitacura",
-  ],
-  openGraph: {
-    title: "Dra. Macarena Fontecilla — Estética Dental y Facial",
-    description:
-      "Estética dental y facial de precisión, resultados naturales. Consulta privada en Vitacura, Santiago de Chile.",
-    locale: "es_CL",
-    type: "website",
-  },
+    "Panel interno de la consulta. AURA propone, usted aprueba. Demo con datos simulados desde Google Sheets.",
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
 };
 
@@ -49,10 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-CL" className={`${jost.variable} ${cormorant.variable}`}>
-      <body className="font-sans antialiased bg-cream text-charcoal">
-        {children}
-      </body>
+    <html lang="es-CL" className={inter.variable}>
+      <body className="font-sans antialiased bg-paper text-ink">{children}</body>
     </html>
   );
 }
