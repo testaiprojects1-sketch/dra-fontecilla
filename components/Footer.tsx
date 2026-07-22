@@ -1,13 +1,13 @@
 export default function Footer() {
   return (
-    <footer className="bg-cream border-t border-gold/30 pt-16 pb-8" role="contentinfo">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid sm:grid-cols-3 gap-12 sm:gap-8">
+    <footer className="bg-cream border-t border-black/[0.06] pt-16 pb-8" role="contentinfo">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
+        <div className="grid sm:grid-cols-3 gap-12 sm:gap-10">
           <div>
-            <h3 className="text-[11px] tracking-section uppercase text-charcoal mb-5">
+            <h3 className="text-[10px] tracking-[0.24em] uppercase text-charcoal mb-5">
               Contacto
             </h3>
-            <ul className="space-y-3 text-sm text-charcoal/70 leading-relaxed">
+            <ul className="space-y-3 text-[13px] text-charcoal/65 leading-relaxed">
               <li>
                 Av. Kennedy 7120, Oficina 306
                 <br />
@@ -35,10 +35,10 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-[11px] tracking-section uppercase text-charcoal mb-5">
+            <h3 className="text-[10px] tracking-[0.24em] uppercase text-charcoal mb-5">
               La Consulta
             </h3>
-            <ul className="space-y-3 text-sm text-charcoal/70">
+            <ul className="space-y-3 text-[13px] text-charcoal/65">
               <li>
                 <a href="#tratamientos" className="hover:text-burgundy transition-colors">
                   Tratamientos
@@ -58,10 +58,10 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-[11px] tracking-section uppercase text-charcoal mb-5">
+            <h3 className="text-[10px] tracking-[0.24em] uppercase text-charcoal mb-5">
               Legal
             </h3>
-            <ul className="space-y-3 text-sm text-charcoal/70">
+            <ul className="space-y-3 text-[13px] text-charcoal/65">
               <li>
                 <a href="#" className="hover:text-burgundy transition-colors">
                   Política de privacidad
@@ -74,8 +74,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-gold/20">
-          <p className="text-center text-[11px] tracking-[0.1em] text-charcoal/50">
+        <div className="mt-14 pt-6 border-t border-black/[0.05]">
+          <p className="text-center text-[10px] tracking-[0.14em] text-charcoal/40 uppercase">
             © 2026 Dra. Macarena Fontecilla · Vitacura, Santiago
           </p>
         </div>

@@ -1,10 +1,12 @@
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import TestimonialSection from "@/components/TestimonialSection";
+import IntroManifesto from "@/components/IntroManifesto";
+import FeatureTiles from "@/components/FeatureTiles";
 import TreatmentsCarousel from "@/components/TreatmentsCarousel";
 import AboutDoctor from "@/components/AboutDoctor";
 import ClinicSection from "@/components/ClinicSection";
+import TestimonialSection from "@/components/TestimonialSection";
 import CredentialsStrip from "@/components/CredentialsStrip";
 import EducationCarousel from "@/components/EducationCarousel";
 import BenefitsGrid from "@/components/BenefitsGrid";
@@ -25,10 +27,12 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <TestimonialSection />
+        <IntroManifesto />
+        <FeatureTiles />
         <TreatmentsCarousel />
         <AboutDoctor />
         <ClinicSection />
+        <TestimonialSection />
         <CredentialsStrip />
         <EducationCarousel />
         <BenefitsGrid />

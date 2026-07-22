@@ -14,17 +14,17 @@ export default function AnnouncementBar() {
   useEffect(() => {
     const id = setInterval(() => {
       setVisible(false);
-      setTimeout(() => {
+      window.setTimeout(() => {
         setIndex((prev) => (prev + 1) % MESSAGES.length);
         setVisible(true);
-      }, 350);
+      }, 320);
     }, 4000);
     return () => clearInterval(id);
   }, []);
 
   return (
     <div
-      className="bg-burgundy text-cream text-center text-[11px] sm:text-xs tracking-[0.14em] uppercase py-2.5 px-4"
+      className="relative z-[60] bg-burgundy text-cream text-center text-[10px] sm:text-[11px] tracking-[0.18em] uppercase py-2.5 px-4"
       role="status"
       aria-live="polite"
     >

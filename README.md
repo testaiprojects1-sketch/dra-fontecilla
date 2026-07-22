@@ -1,15 +1,23 @@
 # Dra. Macarena Fontecilla — Estética Dental y Facial
 
-Prototype single-page website for a private aesthetic dental & facial practice in Vitacura, Santiago de Chile.
+Single-page prototype inspired by the homepage composition of [drsebagh.com](https://www.drsebagh.com/), adapted for a private aesthetic practice in Vitacura.
 
-Inspired by the layout and refined aesthetic of [drsebagh.com](https://www.drsebagh.com/), adapted from e-commerce skincare to a clinical practice.
+## Layout (Sebagh order)
 
-## Stack
-
-- Next.js 14 (App Router)
-- Tailwind CSS
-- Static, mobile-first
-- Chilean Spanish copy
+1. Announcement bar  
+2. Centered wordmark header  
+3. Full-bleed hero slideshow  
+4. Centered manifesto  
+5. Three feature tiles  
+6. Treatments carousel  
+7. About the doctor  
+8. Full-bleed clinic split  
+9. Patient testimonial  
+10. Credentials strip  
+11. Education carousel  
+12. Benefits grid  
+13. Final CTA + assistant slot  
+14. Footer  
 
 ## Develop
 
@@ -18,19 +26,8 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Build
-
-```bash
-npm run build
-npm start
-```
-
 ## Deploy
 
-Configured for Vercel. Push to GitHub and import the repo in the Vercel dashboard, or:
-
 ```bash
-npx vercel
+npx vercel --prod
 ```
