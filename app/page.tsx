@@ -13,6 +13,7 @@ import BenefitsGrid from "@/components/BenefitsGrid";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import FadeUpObserver from "@/components/FadeUpObserver";
+import ElevenLabsConvaiWidget from "@/components/ElevenLabsConvaiWidget";
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
       </main>
       <Footer />
       <FadeUpObserver />
+      <ElevenLabsConvaiWidget />
     </>
   );
 }

@@ -27,10 +27,11 @@ export default function FinalCTA() {
           className="mt-14 mx-auto max-w-sm border border-gold/35 bg-cream px-6 py-8"
         >
           <p className="text-[10px] tracking-[0.24em] uppercase text-burgundy mb-3">
-            Próximamente
+            Asistente en línea
           </p>
           <p className="font-serif text-lg text-charcoal/65 leading-snug">
-            Asistente de agenda en línea — próximamente
+            Use el asistente de voz (botón flotante) para agendar o resolver
+            consultas.
           </p>
         </div>
       </div>
