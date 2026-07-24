@@ -1,15 +1,20 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ConversationProvider, useConversation } from "@elevenlabs/react";
-import { buildWebsiteKnowledgeBrief } from "@/lib/clinicKnowledge";
+import {
+  CLINIC,
+  buildWebsiteKnowledgeBrief,
+} from "@/lib/clinicKnowledge";
 
 const AGENT_ID =
   process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID?.trim() ||
   "agent_1001ky62xg8wfpmrg3n2zmyy2p9v";
 
-function ClaraCallButton() {
+function ClaraPanel() {
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [signedUrl, setSignedUrl] = useState<string | null>(null);
   const [mode, setMode] = useState<"idle" | "listening" | "speaking">("idle");
 
   const servicesKb = useMemo(
@@ -17,8 +22,27 @@ function ClaraCallButton() {
     []
   );
 
+  const servicesKbRef = useRef(servicesKb);
+  servicesKbRef.current = servicesKb;
+
+  const refreshSignedUrl = useCallback(() => {
+    fetch("/api/elevenlabs/signed-url")
+      .then((r) => r.json())
+      .then((data: { signedUrl?: string }) => {
+        if (data.signedUrl) setSignedUrl(data.signedUrl);
+      })
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    refreshSignedUrl();
+    const id = window.setInterval(refreshSignedUrl, 45_000);
+    return () => window.clearInterval(id);
+  }, [refreshSignedUrl]);
+
   const conversation = useConversation({
     onError: (message) => {
+      setOpen(true);
       setError(
         typeof message === "string"
           ? message
@@ -31,101 +55,165 @@ function ClaraCallButton() {
       else setMode("idle");
     },
     onConnect: () => {
-      try {
-        conversation.sendContextualUpdate(
-          `Datos del sitio web (usar como fuente de verdad):\n${servicesKb}`
-        );
-      } catch {
-        // non-fatal
-      }
+      setError(null);
     },
   });
+
+  const conversationRef = useRef(conversation);
+  conversationRef.current = conversation;
 
   const connected = conversation.status === "connected";
   const connecting = conversation.status === "connecting";
 
-  const start = useCallback(async () => {
+  /** Must stay synchronous inside the click handler (no await before startSession). */
+  const start = () => {
     setError(null);
+    setOpen(true);
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
-      setError("Permita el micrófono en el navegador e intente de nuevo.");
-      return;
-    }
-
-    try {
-      const authRes = await fetch("/api/elevenlabs/signed-url");
-      const auth = (await authRes.json()) as {
-        signedUrl?: string;
-        agentId?: string;
-        fallbackAgentId?: string;
-        error?: string;
-      };
-
       const session = {
-        dynamicVariables: { services_kb: servicesKb },
+        dynamicVariables: { services_kb: servicesKbRef.current },
+        onConnect: () => {
+          try {
+            conversationRef.current.sendContextualUpdate(
+              `Datos del sitio web (fuente de verdad):\n${servicesKbRef.current}`
+            );
+          } catch {
+            // non-fatal
+          }
+        },
       };
 
-      if (auth.signedUrl) {
-        await conversation.startSession({
-          ...session,
-          signedUrl: auth.signedUrl,
-        });
+      if (signedUrl) {
+        conversation.startSession({ ...session, signedUrl });
       } else {
-        await conversation.startSession({
-          ...session,
-          agentId: auth.fallbackAgentId || auth.agentId || AGENT_ID,
-        });
+        conversation.startSession({ ...session, agentId: AGENT_ID });
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error al iniciar la llamada");
     }
-  }, [conversation, servicesKb]);
+  };
 
-  const stop = useCallback(async () => {
-    await conversation.endSession();
+  const stop = () => {
+    conversation.endSession();
     setMode("idle");
-  }, [conversation]);
+  };
 
   return (
-    <div className="fixed bottom-5 right-5 z-[90] flex flex-col items-end gap-2">
-      {error && (
-        <div className="max-w-[260px] border border-burgundy/35 bg-cream px-3 py-2 text-[11px] leading-snug text-burgundy shadow-md">
-          {error}
+    <div className="fixed bottom-5 right-5 z-[200] flex flex-col items-end gap-2">
+      {open && (
+        <div
+          className="w-[min(100vw-2rem,320px)] border border-gold/40 bg-cream p-4 shadow-xl"
+          role="dialog"
+          aria-label="Asistente Clara"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-[10px] tracking-[0.22em] uppercase text-burgundy">
+                Asistente web
+              </p>
+              <p className="mt-1 font-serif text-[17px] text-charcoal">Clara</p>
+              <p className="mt-1.5 text-[12px] leading-relaxed text-charcoal/60">
+                Consulta Dra. Fontecilla · tratamientos, precios y ubicación.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                if (connected || connecting) stop();
+                setOpen(false);
+              }}
+              className="text-[11px] text-charcoal/45 hover:text-charcoal"
+            >
+              Cerrar
+            </button>
+          </div>
+
+          <div className="mt-3 flex items-center gap-2 border border-black/[0.06] bg-ivory px-3 py-2">
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${
+                connected
+                  ? "bg-burgundy"
+                  : connecting
+                    ? "animate-pulse bg-gold"
+                    : "bg-charcoal/25"
+              }`}
+            />
+            <p className="text-[11px] text-charcoal/55">
+              {connected
+                ? mode === "speaking"
+                  ? "Clara habla…"
+                  : mode === "listening"
+                    ? "Escuchando…"
+                    : "En llamada"
+                : connecting
+                  ? "Conectando con Clara…"
+                  : "Listo — pulse Hablar"}
+            </p>
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            {!connected ? (
+              <button
+                type="button"
+                onClick={start}
+                disabled={connecting}
+                className="bg-burgundy px-3 py-2 text-[10px] tracking-[0.18em] uppercase text-cream disabled:opacity-50"
+              >
+                {connecting ? "Conectando…" : "Hablar"}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={stop}
+                className="border border-burgundy/40 px-3 py-2 text-[10px] tracking-[0.18em] uppercase text-burgundy"
+              >
+                Colgar
+              </button>
+            )}
+            <a
+              href={CLINIC.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-charcoal/20 px-3 py-2 text-[10px] tracking-[0.18em] uppercase text-charcoal hover:border-burgundy hover:text-burgundy"
+            >
+              WhatsApp
+            </a>
+          </div>
+
+          {error && (
+            <p className="mt-3 text-[12px] font-medium text-burgundy">{error}</p>
+          )}
         </div>
       )}
-      {connected && (
-        <p className="rounded-full bg-cream/95 px-3 py-1 text-[10px] tracking-[0.14em] uppercase text-charcoal/60 shadow">
-          {mode === "speaking"
-            ? "Clara habla…"
-            : mode === "listening"
-              ? "Escuchando…"
-              : "En llamada"}
-        </p>
-      )}
+
       <button
         type="button"
         onClick={() => {
-          if (connected) void stop();
-          else void start();
+          if (open && !connected && !connecting) {
+            start();
+            return;
+          }
+          if (connected || connecting) {
+            setOpen(true);
+            return;
+          }
+          start();
         }}
-        disabled={connecting}
-        aria-label={connected ? "Colgar llamada con Clara" : "Hablar con Clara"}
-        className={`flex h-14 min-w-14 items-center justify-center gap-2 rounded-full px-5 text-[10px] tracking-[0.2em] uppercase text-cream shadow-lg transition-transform hover:scale-[1.03] disabled:opacity-60 ${
-          connected ? "bg-charcoal" : "bg-burgundy"
+        aria-label="Hablar con Clara"
+        className={`flex h-14 min-w-14 items-center justify-center rounded-full px-5 text-[10px] tracking-[0.2em] uppercase text-cream shadow-lg transition-transform hover:scale-[1.03] ${
+          connected || connecting ? "bg-charcoal" : "bg-burgundy"
         }`}
       >
-        {connecting ? "Conectando…" : connected ? "Colgar" : "Hablar"}
+        {connecting ? "…" : connected ? "En vivo" : "Hablar"}
       </button>
     </div>
   );
 }
 
-/** Voice assistant for the public site — React SDK (reliable connect + errors). */
 export default function ElevenLabsConvaiWidget() {
   return (
     <ConversationProvider>
-      <ClaraCallButton />
+      <ClaraPanel />
     </ConversationProvider>
   );
 }
