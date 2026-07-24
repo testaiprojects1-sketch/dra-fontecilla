@@ -30,8 +30,8 @@ export default function FinalCTA() {
             Asistente en línea
           </p>
           <p className="font-serif text-lg text-charcoal/65 leading-snug">
-            Use el asistente de voz (botón flotante) para agendar o resolver
-            consultas.
+            Pulse el botón flotante abajo a la derecha para hablar con el
+            asistente. Conoce los tratamientos, precios y ubicación de esta web.
           </p>
         </div>
       </div>
