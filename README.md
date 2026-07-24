@@ -14,7 +14,7 @@ Single-page prototype inspired by the homepage composition of [drsebagh.com](htt
 8. Full-bleed clinic split  
 9. Patient testimonial  
 10. Credentials strip  
-11. Education carousel  
+11. Treatment fee calculator  
 12. Benefits grid  
 13. Final CTA + assistant slot  
 14. Footer  

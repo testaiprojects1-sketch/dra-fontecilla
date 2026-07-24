@@ -8,7 +8,6 @@ import AboutDoctor from "@/components/AboutDoctor";
 import ClinicSection from "@/components/ClinicSection";
 import TestimonialSection from "@/components/TestimonialSection";
 import CredentialsStrip from "@/components/CredentialsStrip";
-import EducationCarousel from "@/components/EducationCarousel";
 import BenefitsGrid from "@/components/BenefitsGrid";
 import TreatmentCalculator from "@/components/TreatmentCalculator";
 import FinalCTA from "@/components/FinalCTA";
@@ -36,7 +35,6 @@ export default function Home() {
         <ClinicSection />
         <TestimonialSection />
         <CredentialsStrip />
-        <EducationCarousel />
         <TreatmentCalculator />
         <BenefitsGrid />
         <FinalCTA />
