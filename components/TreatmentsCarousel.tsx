@@ -1,51 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-
-const TREATMENTS = [
-  {
-    badge: "Estética",
-    name: "Estética dental",
-    description: "Restauraciones y carillas con armonía facial.",
-    price: "Desde $450.000",
-    image: "/images/tx-estetica.jpg",
-  },
-  {
-    badge: "Sonrisa",
-    name: "Blanqueamiento profesional",
-    description: "Aclaración segura y controlada en consulta.",
-    price: "Desde $280.000",
-    image: "/images/tx-blanqueamiento.jpg",
-  },
-  {
-    badge: "Facial",
-    name: "Armonización facial",
-    description: "Equilibrio sutil de volúmenes y proporciones.",
-    price: "Desde $350.000",
-    image: "/images/tx-armonizacion.jpg",
-  },
-  {
-    badge: "Facial",
-    name: "Toxina botulínica",
-    description: "Suaviza líneas de expresión con naturalidad.",
-    price: "Desde $180.000",
-    image: "/images/tx-toxina.jpg",
-  },
-  {
-    badge: "Digital",
-    name: "Diseño de sonrisa",
-    description: "Plan digital personalizado de su nueva sonrisa.",
-    price: "Desde $520.000",
-    image: "/images/tx-diseno.jpg",
-  },
-  {
-    badge: "Seguimiento",
-    name: "Mantención y control",
-    description: "Seguimiento cercano para resultados duraderos.",
-    price: "Desde $80.000",
-    image: "/images/tx-mantencion.jpg",
-  },
-];
+import { TREATMENTS } from "@/lib/clinicKnowledge";
 
 export default function TreatmentsCarousel() {
   const scrollerRef = useRef<HTMLDivElement>(null);
