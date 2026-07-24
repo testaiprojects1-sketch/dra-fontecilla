@@ -89,81 +89,89 @@ export default function TreatmentCalculator() {
           </p>
         </div>
 
-        <div className="fade-up mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12">
-          <ul className="lg:col-span-7 space-y-0 divide-y divide-black/[0.06] border-y border-black/[0.06]">
-            {TREATMENTS.map((t) => {
-              const quantity = qty[t.id] ?? 0;
-              const active = quantity > 0;
-              return (
-                <li
-                  key={t.id}
-                  className={`flex flex-col sm:flex-row sm:items-center gap-4 py-5 ${
-                    active ? "bg-cream/60" : ""
-                  }`}
-                >
-                  <div className="flex-1 min-w-0 sm:pr-4">
-                    <div className="flex items-baseline gap-3 flex-wrap">
-                      <h3 className="font-sans text-[14px] tracking-wide text-charcoal">
-                        {t.name}
-                      </h3>
-                      <span className="text-[9px] tracking-[0.16em] uppercase text-charcoal/40">
-                        {t.badge}
-                      </span>
+        <div className="fade-up mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12 lg:items-start">
+          <div className="lg:col-span-7 min-h-0">
+            <ul
+              className="max-h-[min(28rem,55vh)] sm:max-h-[min(32rem,60vh)] overflow-y-auto overscroll-contain space-y-0 divide-y divide-black/[0.06] border border-black/[0.06] bg-cream/40 pr-1 scrollbar-thin"
+              aria-label="Lista de tratamientos para cotizar"
+            >
+              {TREATMENTS.map((t) => {
+                const quantity = qty[t.id] ?? 0;
+                const active = quantity > 0;
+                return (
+                  <li
+                    key={t.id}
+                    className={`flex flex-col sm:flex-row sm:items-center gap-4 px-4 sm:px-5 py-5 ${
+                      active ? "bg-cream" : ""
+                    }`}
+                  >
+                    <div className="flex-1 min-w-0 sm:pr-4">
+                      <div className="flex items-baseline gap-3 flex-wrap">
+                        <h3 className="font-sans text-[14px] tracking-wide text-charcoal">
+                          {t.name}
+                        </h3>
+                        <span className="text-[9px] tracking-[0.16em] uppercase text-charcoal/40">
+                          {t.badge}
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-[13px] text-charcoal/55 leading-snug">
+                        {t.description}
+                      </p>
+                      <p className="mt-2 text-[12px] tracking-[0.04em] text-burgundy">
+                        {formatDesdeCLP(t.priceFromCLP)}
+                      </p>
                     </div>
-                    <p className="mt-1.5 text-[13px] text-charcoal/55 leading-snug">
-                      {t.description}
-                    </p>
-                    <p className="mt-2 text-[12px] tracking-[0.04em] text-burgundy">
-                      {formatDesdeCLP(t.priceFromCLP)}
-                    </p>
-                  </div>
 
-                  <div className="flex items-center gap-3 shrink-0">
-                    {active ? (
-                      <>
-                        <div className="flex items-center border border-charcoal/20">
+                    <div className="flex items-center gap-3 shrink-0">
+                      {active ? (
+                        <>
+                          <div className="flex items-center border border-charcoal/20 bg-cream">
+                            <button
+                              type="button"
+                              aria-label={`Quitar ${t.name}`}
+                              onClick={() => setQuantity(t.id, quantity - 1)}
+                              className="h-10 w-10 text-charcoal hover:bg-ivory transition-colors"
+                            >
+                              −
+                            </button>
+                            <span className="w-8 text-center text-[13px] tabular-nums text-charcoal">
+                              {quantity}
+                            </span>
+                            <button
+                              type="button"
+                              aria-label={`Agregar ${t.name}`}
+                              onClick={() => setQuantity(t.id, quantity + 1)}
+                              className="h-10 w-10 text-charcoal hover:bg-ivory transition-colors"
+                            >
+                              +
+                            </button>
+                          </div>
                           <button
                             type="button"
-                            aria-label={`Quitar ${t.name}`}
-                            onClick={() => setQuantity(t.id, quantity - 1)}
-                            className="h-10 w-10 text-charcoal hover:bg-cream transition-colors"
+                            onClick={() => setQuantity(t.id, 0)}
+                            className="text-[10px] tracking-[0.16em] uppercase text-charcoal/45 hover:text-burgundy"
                           >
-                            −
+                            Quitar
                           </button>
-                          <span className="w-8 text-center text-[13px] tabular-nums text-charcoal">
-                            {quantity}
-                          </span>
-                          <button
-                            type="button"
-                            aria-label={`Agregar ${t.name}`}
-                            onClick={() => setQuantity(t.id, quantity + 1)}
-                            className="h-10 w-10 text-charcoal hover:bg-cream transition-colors"
-                          >
-                            +
-                          </button>
-                        </div>
+                        </>
+                      ) : (
                         <button
                           type="button"
-                          onClick={() => setQuantity(t.id, 0)}
-                          className="text-[10px] tracking-[0.16em] uppercase text-charcoal/45 hover:text-burgundy"
+                          onClick={() => setQuantity(t.id, 1)}
+                          className="border border-charcoal/80 px-5 py-2.5 text-[10px] tracking-[0.2em] uppercase text-charcoal hover:border-burgundy hover:text-burgundy transition-colors"
                         >
-                          Quitar
+                          Agregar
                         </button>
-                      </>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setQuantity(t.id, 1)}
-                        className="border border-charcoal/80 px-5 py-2.5 text-[10px] tracking-[0.2em] uppercase text-charcoal hover:border-burgundy hover:text-burgundy transition-colors"
-                      >
-                        Agregar
-                      </button>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-2 text-[11px] text-charcoal/40 tracking-wide">
+              Desplace la lista para ver todos los tratamientos
+            </p>
+          </div>
 
           <aside className="lg:col-span-5 lg:sticky lg:top-28 h-fit border border-gold/35 bg-cream px-6 py-7">
             <p className="text-[10px] tracking-[0.24em] uppercase text-burgundy">

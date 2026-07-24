@@ -32,12 +32,12 @@ export default function Home() {
         <IntroManifesto />
         <FeatureTiles />
         <TreatmentsCarousel />
-        <TreatmentCalculator />
         <AboutDoctor />
         <ClinicSection />
         <TestimonialSection />
         <CredentialsStrip />
         <EducationCarousel />
+        <TreatmentCalculator />
         <BenefitsGrid />
         <FinalCTA />
       </main>
