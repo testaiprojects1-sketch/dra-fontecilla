@@ -1,17 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import {
   CLINIC,
   TREATMENTS,
   formatCLP,
   formatDesdeCLP,
 } from "@/lib/clinicKnowledge";
+import {
+  clearSelection,
+  getSnapshot,
+  setQuantity,
+  subscribe,
+} from "@/lib/cotizadorStore";
 
-type QtyMap = Record<string, number>;
+const EMPTY = {} as Record<string, number>;
 
 export default function TreatmentCalculator() {
-  const [qty, setQty] = useState<QtyMap>({});
+  const qty = useSyncExternalStore(subscribe, getSnapshot, () => EMPTY);
 
   const selected = useMemo(
     () =>
@@ -35,18 +41,6 @@ export default function TreatmentCalculator() {
     () => selected.reduce((sum, row) => sum + row.quantity, 0),
     [selected]
   );
-
-  const setQuantity = (id: string, next: number) => {
-    setQty((prev) => {
-      const value = Math.max(0, Math.min(5, next));
-      if (value === 0) {
-        const rest = { ...prev };
-        delete rest[id];
-        return rest;
-      }
-      return { ...prev, [id]: value };
-    });
-  };
 
   const whatsappEstimate = useMemo(() => {
     if (selected.length === 0) return CLINIC.whatsappUrl;
@@ -239,7 +233,7 @@ export default function TreatmentCalculator() {
               {selected.length > 0 && (
                 <button
                   type="button"
-                  onClick={() => setQty({})}
+                  onClick={() => clearSelection()}
                   className="text-[10px] tracking-[0.2em] uppercase text-charcoal/45 hover:text-burgundy"
                 >
                   Vaciar selección
