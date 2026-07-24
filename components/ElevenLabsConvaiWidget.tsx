@@ -19,7 +19,9 @@ export default function ElevenLabsConvaiWidget() {
 
   const dynamicJson = useMemo(() => {
     const brief = buildWebsiteKnowledgeBrief();
+    // Agent prompt expects {{services_kb}} as the knowledge source.
     return JSON.stringify({
+      services_kb: brief.slice(0, 4500),
       website_context: brief.slice(0, 4500),
     });
   }, []);
