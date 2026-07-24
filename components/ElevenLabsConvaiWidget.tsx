@@ -1,54 +1,52 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
 import Script from "next/script";
+import { useMemo } from "react";
 import { buildWebsiteKnowledgeBrief } from "@/lib/clinicKnowledge";
 
 const AGENT_ID =
   process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID?.trim() ||
   "agent_1001ky62xg8wfpmrg3n2zmyy2p9v";
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      "elevenlabs-convai": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      > & {
+        "agent-id"?: string;
+        "dynamic-variables"?: string;
+      };
+    }
+  }
+}
+
 /**
- * Official ElevenLabs floating widget (reliable audio) + website knowledge
- * injected via dynamic-variables so answers match this page.
- *
- * In the ElevenLabs agent prompt, include: {{website_context}}
+ * Official floating ConvAI widget.
+ * Agent Clara requires {{services_kb}} — we always pass it.
  */
 export default function ElevenLabsConvaiWidget() {
-  const hostRef = useRef<HTMLDivElement | null>(null);
-
-  const dynamicJson = useMemo(() => {
-    const brief = buildWebsiteKnowledgeBrief();
-    // Agent prompt expects {{services_kb}} as the knowledge source.
-    return JSON.stringify({
-      services_kb: brief.slice(0, 4500),
-      website_context: brief.slice(0, 4500),
-    });
+  const dynamicVariables = useMemo(() => {
+    const servicesKb = buildWebsiteKnowledgeBrief().slice(0, 4000);
+    return JSON.stringify({ services_kb: servicesKb });
   }, []);
-
-  useEffect(() => {
-    const host = hostRef.current;
-    if (!host || !AGENT_ID) return;
-
-    let el = host.querySelector("elevenlabs-convai") as HTMLElement | null;
-    if (!el) {
-      el = document.createElement("elevenlabs-convai");
-      host.appendChild(el);
-    }
-    el.setAttribute("agent-id", AGENT_ID);
-    el.setAttribute("dynamic-variables", dynamicJson);
-  }, [dynamicJson]);
 
   if (!AGENT_ID) return null;
 
   return (
     <>
       <Script
-        src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+        src="https://unpkg.com/@elevenlabs/convai-widget-embed@0.14.12/dist/index.js"
         strategy="afterInteractive"
+        type="text/javascript"
         async
       />
-      <div ref={hostRef} className="contents" />
+      <elevenlabs-convai
+        agent-id={AGENT_ID}
+        dynamic-variables={dynamicVariables}
+      />
     </>
   );
 }
