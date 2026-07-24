@@ -8,21 +8,6 @@ const AGENT_ID =
   process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID?.trim() ||
   "agent_1001ky62xg8wfpmrg3n2zmyy2p9v";
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace JSX {
-    interface IntrinsicElements {
-      "elevenlabs-convai": React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > & {
-        "agent-id"?: string;
-        "dynamic-variables"?: string;
-      };
-    }
-  }
-}
-
 /**
  * Official floating ConvAI widget.
  * Agent Clara requires {{services_kb}} — we always pass it.
