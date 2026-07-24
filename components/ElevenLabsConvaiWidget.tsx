@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { buildWebsiteKnowledgeBrief } from "@/lib/clinicKnowledge";
 
 const AGENT_ID =
@@ -9,14 +9,36 @@ const AGENT_ID =
   "agent_1001ky62xg8wfpmrg3n2zmyy2p9v";
 
 /**
- * Official floating ConvAI widget.
- * Agent Clara requires {{services_kb}} — we always pass it.
+ * Mount the official floating widget only after the embed script has loaded,
+ * and always pass required {{services_kb}}.
  */
 export default function ElevenLabsConvaiWidget() {
-  const dynamicVariables = useMemo(() => {
-    const servicesKb = buildWebsiteKnowledgeBrief().slice(0, 4000);
-    return JSON.stringify({ services_kb: servicesKb });
-  }, []);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const [scriptReady, setScriptReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!scriptReady || !hostRef.current || !AGENT_ID) return;
+
+    const host = hostRef.current;
+    host.replaceChildren();
+
+    try {
+      const el = document.createElement("elevenlabs-convai");
+      el.setAttribute("agent-id", AGENT_ID);
+      el.setAttribute(
+        "dynamic-variables",
+        JSON.stringify({
+          services_kb: buildWebsiteKnowledgeBrief().slice(0, 4000),
+        })
+      );
+      host.appendChild(el);
+    } catch (e) {
+      setError(
+        e instanceof Error ? e.message : "No se pudo cargar el asistente de voz"
+      );
+    }
+  }, [scriptReady]);
 
   if (!AGENT_ID) return null;
 
@@ -26,12 +48,26 @@ export default function ElevenLabsConvaiWidget() {
         src="https://unpkg.com/@elevenlabs/convai-widget-embed@0.14.12/dist/index.js"
         strategy="afterInteractive"
         type="text/javascript"
-        async
+        onLoad={() => setScriptReady(true)}
+        onError={() =>
+          setError("No se pudo cargar el script de ElevenLabs (red / bloqueador).")
+        }
       />
-      <elevenlabs-convai
-        agent-id={AGENT_ID}
-        dynamic-variables={dynamicVariables}
-      />
+      <div ref={hostRef} id="clara-convai-host" />
+      {error && (
+        <div className="fixed bottom-5 right-5 z-[90] max-w-xs border border-burgundy/30 bg-cream p-4 text-[12px] text-burgundy shadow-lg">
+          <p className="font-medium">Asistente no disponible</p>
+          <p className="mt-1 text-charcoal/70">{error}</p>
+          <a
+            href={`https://elevenlabs.io/app/talk-to?agent_id=${AGENT_ID}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block text-[10px] tracking-[0.16em] uppercase text-burgundy underline"
+          >
+            Abrir Clara en ElevenLabs
+          </a>
+        </div>
+      )}
     </>
   );
 }
