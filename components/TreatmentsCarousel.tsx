@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { TREATMENTS } from "@/lib/clinicKnowledge";
+import { TREATMENTS, formatDesdeCLP } from "@/lib/clinicKnowledge";
 
 export default function TreatmentsCarousel() {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -94,7 +94,7 @@ export default function TreatmentsCarousel() {
                 {t.description}
               </p>
               <p className="mt-2.5 text-[12px] tracking-[0.04em] text-burgundy">
-                {t.price}
+                {formatDesdeCLP(t.priceFromCLP)}
               </p>
             </article>
           ))}

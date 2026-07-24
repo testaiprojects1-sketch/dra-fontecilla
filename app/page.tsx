@@ -10,6 +10,7 @@ import TestimonialSection from "@/components/TestimonialSection";
 import CredentialsStrip from "@/components/CredentialsStrip";
 import EducationCarousel from "@/components/EducationCarousel";
 import BenefitsGrid from "@/components/BenefitsGrid";
+import TreatmentCalculator from "@/components/TreatmentCalculator";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import FadeUpObserver from "@/components/FadeUpObserver";
@@ -31,6 +32,7 @@ export default function Home() {
         <IntroManifesto />
         <FeatureTiles />
         <TreatmentsCarousel />
+        <TreatmentCalculator />
         <AboutDoctor />
         <ClinicSection />
         <TestimonialSection />

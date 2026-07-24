@@ -45,6 +45,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="#cotizador" className="hover:text-burgundy transition-colors">
+                  Cotizador
+                </a>
+              </li>
+              <li>
                 <a href="#la-doctora" className="hover:text-burgundy transition-colors">
                   La Doctora
                 </a>

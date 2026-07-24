@@ -4,65 +4,81 @@
  */
 
 export interface TreatmentInfo {
+  id: string;
   badge: string;
   name: string;
   description: string;
-  price: string;
+  /** Approximate starting fee in CLP (used by cotizador). */
+  priceFromCLP: number;
   image: string;
   details: string;
 }
 
+export function formatDesdeCLP(amount: number): string {
+  return `Desde $${amount.toLocaleString("es-CL")}`;
+}
+
+export function formatCLP(amount: number): string {
+  return `$${amount.toLocaleString("es-CL")}`;
+}
+
 export const TREATMENTS: TreatmentInfo[] = [
   {
+    id: "estetica-dental",
     badge: "Estética",
     name: "Estética dental",
     description: "Restauraciones y carillas con armonía facial.",
-    price: "Desde $450.000",
+    priceFromCLP: 450000,
     image: "/images/tx-estetica.jpg",
     details:
       "Carillas, restauraciones y correcciones mínimamente invasivas alineadas al rostro. Evaluación digital incluida en el plan.",
   },
   {
+    id: "blanqueamiento",
     badge: "Sonrisa",
     name: "Blanqueamiento profesional",
     description: "Aclaración segura y controlada en consulta.",
-    price: "Desde $280.000",
+    priceFromCLP: 280000,
     image: "/images/tx-blanqueamiento.jpg",
     details:
       "Protocolo en consulta con control de sensibilidad. Incluye indicaciones de mantención domiciliaria.",
   },
   {
+    id: "armonizacion",
     badge: "Facial",
     name: "Armonización facial",
     description: "Equilibrio sutil de volúmenes y proporciones.",
-    price: "Desde $350.000",
+    priceFromCLP: 350000,
     image: "/images/tx-armonizacion.jpg",
     details:
       "Ácido hialurónico y protocolos de perfil (labios, mentón, pómulos, mandíbula) con resultado natural.",
   },
   {
+    id: "toxina",
     badge: "Facial",
     name: "Toxina botulínica",
     description: "Suaviza líneas de expresión con naturalidad.",
-    price: "Desde $180.000",
+    priceFromCLP: 180000,
     image: "/images/tx-toxina.jpg",
     details:
       "Tercio superior (frente, entrecejo, patas de gallo) y opciones de masaeteros. Control post a ~14 días.",
   },
   {
+    id: "diseno-sonrisa",
     badge: "Digital",
     name: "Diseño de sonrisa",
     description: "Plan digital personalizado de su nueva sonrisa.",
-    price: "Desde $520.000",
+    priceFromCLP: 520000,
     image: "/images/tx-diseno.jpg",
     details:
       "Diagnóstico digital, simulación y plan por etapas. Ideal antes de carillas o rehabilitación estética.",
   },
   {
+    id: "mantencion",
     badge: "Seguimiento",
     name: "Mantención y control",
     description: "Seguimiento cercano para resultados duraderos.",
-    price: "Desde $80.000",
+    priceFromCLP: 80000,
     image: "/images/tx-mantencion.jpg",
     details:
       "Controles post-tratamiento, retoques de toxina en ventana ideal y seguimiento de packs.",
@@ -111,7 +127,11 @@ export const CLINIC = {
     },
     {
       q: "¿Los precios son finales?",
-      a: "Los valores publicados son «desde» orientativos en CLP. El plan definitivo se confirma en la evaluación presencial según zonas, producto y objetivos.",
+      a: "Los valores publicados y el cotizador web son «desde» orientativos en CLP. El precio final está sujeto a evaluación presencial de la doctora según zonas, producto y objetivos.",
+    },
+    {
+      q: "¿Hay cotizador en la web?",
+      a: "Sí. En la sección Cotizador puede sumar o quitar tratamientos para ver un total aproximado. No es un presupuesto formal.",
     },
     {
       q: "¿Atención dental y facial?",
@@ -124,7 +144,7 @@ export const CLINIC = {
 export function buildWebsiteKnowledgeBrief(): string {
   const treatmentsBlock = TREATMENTS.map(
     (t) =>
-      `- ${t.name} (${t.price}): ${t.description} ${t.details}`
+      `- ${t.name} (${formatDesdeCLP(t.priceFromCLP)}): ${t.description} ${t.details}`
   ).join("\n");
 
   const faqBlock = CLINIC.faqs
@@ -135,6 +155,7 @@ export function buildWebsiteKnowledgeBrief(): string {
     `Eres el asistente de voz del sitio web de ${CLINIC.name}, consulta de ${CLINIC.specialty} en ${CLINIC.city}.`,
     "Responde solo con información de este sitio. Habla en español de Chile, usted, tono cálido y profesional.",
     "Si no sabes algo clínico específico, invita a agendar una evaluación. No inventes precios fuera de la lista.",
+    "Puede mencionar el Cotizador (#cotizador) para estimar totales aproximados; siempre aclare que el precio final lo define la doctora.",
     "",
     "— Consulta —",
     `Dirección: ${CLINIC.address}`,
@@ -161,6 +182,7 @@ export function buildWebsiteKnowledgeBrief(): string {
 
 export function treatmentsAsPlainText(): string {
   return TREATMENTS.map(
-    (t) => `${t.name} — ${t.price}. ${t.description} ${t.details}`
+    (t) =>
+      `${t.name} — ${formatDesdeCLP(t.priceFromCLP)}. ${t.description} ${t.details}`
   ).join("\n");
 }
